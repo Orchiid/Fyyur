@@ -165,6 +165,11 @@ source env/bin/activate
 ```
 source env/Scripts/activate
 ```
+>**Note** - For Visual studio code on windows use just this:
+```
+env/Scripts/activate
+```
+
 
 4. **Install the dependencies:**
 ```

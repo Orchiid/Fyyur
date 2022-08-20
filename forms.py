@@ -120,7 +120,7 @@ class VenueForm(Form):
         'website_link'
     )
 
-    seeking_talent = BooleanField( 'seeking_talent' )
+    seeking_talent = BooleanField( 'seeking_talent', default=True, render_kw ={'checked':''}  )
 
     seeking_description = StringField(
         'seeking_description'
@@ -231,7 +231,7 @@ class ArtistForm(Form):
         'website_link'
      )
 
-    seeking_venue = BooleanField( 'seeking_venue' )
+    seeking_venue = BooleanField( 'seeking_venue', default=True, render_kw ={'checked':''}  )
 
     seeking_description = StringField(
             'seeking_description'

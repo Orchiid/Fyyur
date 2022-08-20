@@ -2,62 +2,130 @@
 {% block title %}New Venue{% endblock %}
 {% block content %}
   <div class="form-wrapper">
-    <form method="post" class="form" action="/venues/create">
+    <form method="POST" class="form" action="/venues/create" id="new-venue">
       <h3 class="form-heading">List a new venue <a href="{{ url_for('index') }}" title="Back to homepage"><i class="fa fa-home pull-right"></i></a></h3>
       <div class="form-group">
         <label for="name">Name</label>
-        {{ form.name(class_ = 'form-control', autofocus = true) }}
+        {{ form.name(class_ = 'form-control', autofocus = true, id = 'name') }}
       </div>
       <div class="form-group">
           <label>City & State</label>
           <div class="form-inline">
             <div class="form-group">
-              {{ form.city(class_ = 'form-control', placeholder='City', autofocus = true) }}
+              {{ form.city(class_ = 'form-control', placeholder='City', autofocus = true, id = 'city') }}
             </div>
             <div class="form-group">
-              {{ form.state(class_ = 'form-control', placeholder='State', autofocus = true) }}
+              {{ form.state(class_ = 'form-control', placeholder='State', autofocus = true, id = 'state') }}
             </div>
           </div>
       </div>
       <div class="form-group">
         <label for="address">Address</label>
-        {{ form.address(class_ = 'form-control', autofocus = true) }}
+        {{ form.address(class_ = 'form-control', autofocus = true, id = 'address') }}
       </div>
       <div class="form-group">
           <label for="phone">Phone</label>
-          {{ form.phone(class_ = 'form-control', placeholder='xxx-xxx-xxxx', autofocus = true) }}
+          {{ form.phone(class_ = 'form-control', placeholder='xxx-xxx-xxxx', autofocus = true, id = 'phone') }}
         </div>
       <div class="form-group">
         <label for="genres">Genres</label>
         <small>Ctrl+Click to select multiple</small>
-        {{ form.genres(class_ = 'form-control', placeholder='Genres, separated by commas', autofocus = true) }}
+        {{ form.genres(class_ = 'form-control', placeholder='Genres, separated by commas', autofocus = true, id = 'genres') }}
       </div>
       
       <div class="form-group">
           <label for="facebook_link">Facebook Link</label>
-          {{ form.facebook_link(class_ = 'form-control', placeholder='http://', autofocus = true) }}
+          {{ form.facebook_link(class_ = 'form-control', placeholder='http://', autofocus = true, id = 'facebook_link') }}
        </div>
       
        <div class="form-group">
           <label for="image_link">Image Link</label>
-          {{ form.image_link(class_ = 'form-control', placeholder='http://', autofocus = true) }}
+          {{ form.image_link(class_ = 'form-control', placeholder='http://', autofocus = true, id = 'image_link') }}
        </div>
 
        <div class="form-group">
             <label for="website_link">Website Link</label>
-            {{ form.website_link(class_ = 'form-control', placeholder='http://', autofocus = true) }}
+            {{ form.website_link(class_ = 'form-control', placeholder='http://', autofocus = true, id = 'website_link') }}
        </div>
 
        <div class="form-group">
              <label for="seeking_talent">Looking for Talent</label>
-             {{ form.seeking_talent(placeholder='Venue', autofocus = true) }}
+             {{ form.seeking_talent(placeholder='Venue', autofocus = true, id = 'seeking_talent', value= 1) }}
        </div>
 
        <div class="form-group">
             <label for="seeking_description">Seeking Description</label>
-            {{ form.seeking_description(class_ = 'form-control', placeholder='Description', autofocus = true) }}
+            {{ form.seeking_description(class_ = 'form-control', placeholder='Description', autofocus = true, id = 'seeking_description') }}
        </div>
-      <input type="submit" value="Create Venue" class="btn btn-primary btn-lg btn-block">
+      <input type="submit" id="submit" value="Create Venue" class="btn btn-primary btn-lg btn-block">
     </form>
   </div>
+
+  <script>
+
+document.getElementById('new-venue').onsubmit = function (e) {
+        e.preventDefault();
+        console.log('yas')
+        const newName = {
+                'name': document.getElementById('name').value,
+                'city': document.getElementById('city').value,
+                'state': document.getElementById('state').value,
+                'address': document.getElementById('address').value,
+                'phone': document.getElementById('phone').value,
+                'genres': document.getElementById('genres').value,
+                'facebook_link': document.getElementById('facebook_link').value,
+                'image_link': document.getElementById('image_link').value,
+                'website_link': document.getElementById('website_link').value,
+                'seeking_talent': document.getElementById('seeking_talent').value,
+                'seeking_description': document.getElementById('seeking_description').value
+        }
+        console.log(newName)
+        fetch('/venues/create', {
+            method: 'POST',
+            credentials: 'same-origin',
+            body: JSON.stringify(newName),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(function (response) {
+            return response.json();
+            console.log(response.json())
+            console.log(newName)
+        })
+        // .then(function (jsonResponse) {
+        //     const displayName = document.getElementById('venue-name');
+
+        //     displayName.innerHTML = jsonResponse['name'];
+        //     document.getElementById('item').appendChild(displayName);
+        //     window.location.reload(true);
+        // })
+        // .catch(function (err) {
+        //   console.log(err)
+        // })
+        
+      }
+
+// document.getElementById('seeking_talent').onclick = function (e) {
+//   if(document.getElementById('seeking_talent').is(":checked"))
+//   document.getElementById('seeking_talent').val(True);
+//     else
+//     document.getElementById('seeking_talent').val(False);
+// }
+
+Array.from(document.getElementsByTagName('checkbox')).forEach(e => e.addEventListener("change",  function() {
+  if (e.is(":checked"))
+    e.val(1);
+  else
+    e.val(0);
+}))
+
+//       document.getElementById("seeking_talent").addEventListener("change",function(){
+//    if(document.querySelector(this).is(":checked"))
+//       document.querySelector(this).val(True);
+//     else
+//       document.querySelector(this).val(False);
+// });
+  </script>
+
 {% endblock %}
