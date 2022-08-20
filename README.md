@@ -155,6 +155,8 @@ git add . --all
 git commit -m "your comment"
 git push -u origin master
 ```
+ Create a pull request for 'main' on GitHub by visiting:
+remote:      https://github.com/Orchiid/cd0046-SQL-and-Data-Modeling-for-the-Web/pull/new/main
 
 3. **Initialize and activate a virtualenv using:**
 ```
